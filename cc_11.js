@@ -9,13 +9,13 @@ class Book { // Define the Book class
         this.copies = copies; // assign number of copies
     
     };
-    getDetails() { // Method to return product details
+    getDetails() { // method to return product details
         return `Title: ${this.title}, Author: ${this.author}, ISBN: ${this.isbn}, Copies: ${this.copies}`;
 
     };
-    updateCopies(quantity) { // Method to update stock when a copy is borrowed or returned
+    updateCopies(quantity) { // Method to update quantities
         if (this.copies >= quantity) {
-            this.copies += quantity; // Reduce copies by ordered quantity
+            this.copies += quantity; // reduce copies by ordered quantity
         } else {
             console.log("Multiple copies available.");
         }
@@ -47,12 +47,12 @@ console.log(book1.getDetails());
             console.log(`${book} is already borrowed. `);
         };
     };
-    returnBook(book) { // Method to return books
+    returnBook(book) { // method to remove book
        const index = this.borrowedBooks.indexOf(book); 
-        if (index !== -1) { // Find book in the borrowed books array
-            this.borrowedBooks.splice(index, 1) // Remove book from borrowed books array 
+        if (index !== -1) { 
+            this.borrowedBooks.splice(index, 1) // removes book from borrowed books
         } else {
-            console.log(`${book} hasn't been borrowed`) // Message if book was not found in array
+            console.log(`${book} is available`) // message 
         }
     }
 }
@@ -66,4 +66,27 @@ console.log(borrower1.borrowedBooks);
 borrower1.returnBook("The Great Gatsby");
 console.log(borrower1.borrowedBooks);
 // Expected output: []
+
+// Task 3: Creating a Library Class
+console.log("\nTask 3: Creating a Library Class");
+
+class Library { // creating Library class with book array and borrowers array
+    constructor() {
+        this.books = []
+        this.borrowers = []
+    };
+    addBook(book) { // adds a new book to library
+        this.books.push(book) 
+    }
+    listBooks() { // logs all books details
+        this.books.forEach(book => {console.log(book.getDetails()); // Log details of books
+        });
+    };  
+}
+
+// Logging test cases output:
+const library = new Library();
+library.addBook(book1);
+library.listBooks();
+// Expected output: "Title: The Great Gatsby, Author: F. Scott Fitzgerald, ISBN: 123456, Copies: 4"
 
