@@ -14,13 +14,9 @@ class Book { // Define the Book class
 
     };
     updateCopies(quantity) { // Method to update quantities
-        if (this.copies >= quantity) {
-            this.copies += quantity; // reduce copies by ordered quantity
-        } else {
-            console.log("Multiple copies available.");
+            this.copies += quantity; // updaye number of copies when book is borrowed or returned
         }
     };
-}
 
 const book1 = new Book("The Great Gatsby", "F. Scott Fitzgerald", 123456, 5);
 console.log(book1.getDetails());
@@ -44,7 +40,7 @@ console.log(book1.getDetails());
         if (!this.borrowedBooks.includes(book)) { // Check to see if books is already borrowed
             this.borrowedBooks.push(book); // If not borrowed add to the borrowed books array
         } else {
-            console.log(`${book} is already borrowed. `);
+            console.log(`${book} is already being borrowed`);
         };
     };
     returnBook(book) { // method to remove book
@@ -72,8 +68,8 @@ console.log("\nTask 3: Creating a Library Class");
 
 class Library { // creating Library class with book array and borrowers array
     constructor() {
-        this.books = []
-        this.borrowers = []
+        this.books = [] // array to hold book instances
+        this.borrowers = [] // array to hold borrower instances
     };
     addBook(book) { // adds a new book to library
         this.books.push(book) 
@@ -81,7 +77,23 @@ class Library { // creating Library class with book array and borrowers array
     listBooks() { // logs all books details
         this.books.forEach(book => {console.log(book.getDetails()); // Log details of books
         });
-    };  
+    }; 
+    lendBook(borrowerId, isbn) { // method to lend a book to a borrower
+        const borrower = this.borrowers.find(b => b.borrowerID === borrowerID); // borrower by id
+        const book = this.books.find(b => b.isbn === isbn); // book by isbn
+
+        if (book && borrower) { 
+            if (book.copies > 0) { 
+                book.updateCopies(-1); // reduce the number of copies
+                borrower.borrowBookbook(book); // add the book to the borrowers borrowedBook
+                console.log(`Book lent to ${borrower.name}: ${book.title}`); // message when book is being borrowed
+            } else {
+                console.log(`${book.title} is unavailable`); // message if book is unavailable 
+            }
+        }
+    }
+        
+
 }
 
 // Logging test cases output:
@@ -90,3 +102,13 @@ library.addBook(book1);
 library.listBooks();
 // Expected output: "Title: The Great Gatsby, Author: F. Scott Fitzgerald, ISBN: 123456, Copies: 4"
 
+//Task 4: Implementing Book Borrowing
+console.log("\nTask 4: Implementing Book Borrowing");
+
+
+library.lendBook(201, 123456);
+console.log(book1.getDetails());
+// Expected output: "Title: The Great Gatsby, Author: F. Scott Fitzgerald, ISBN: 123456, Copies: 3"
+borrower1.borrowBook("The Great Gatsby");
+console.log(borrower1.borrowedBooks);
+// Expected output: ["The Great Gatsby"]
